@@ -22,7 +22,7 @@ CLEAR_ALL = "\u001b[2J"
 print(CLEAR_ALL + UP.format(1000))
 
 t = datetime.datetime.today()
-future = datetime.datetime(t.year, t.month, t.day, 11, 25) # TODO: Skrifa inn kl hvað skráning byrjar
+future = datetime.datetime(t.year, t.month, t.day, 11, 25) # TODO: Put the timer a few minutes before registeration opens
 
 if t.hour >= 2:
     future += datetime.timedelta(days=1)
@@ -51,7 +51,7 @@ print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Starting driver{UNBOLD}")
 driver = webdriver.Chrome(options=options)
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Fetching website{UNBOLD}")
-driver.get("https://velnem.hi.is/")
+driver.get("https://velnem.hi.is/") # TODO: change to your student union homepage
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Clicking: {YELLOW} SKRÁ INN{UNBOLD}")
 elem = driver.find_element_by_link_text("SKRÁ INN")
