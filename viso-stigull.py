@@ -21,21 +21,21 @@ CLEAR_ALL = "\u001b[2J"
 print(CLEAR_ALL + UP.format(1000))
 USERNAME = input(f"{MAGENTA}Username:{YELLOW} ")
 PASSWORD = input(f"{MAGENTA}Password:{YELLOW} ")
-try:
-    hour, minute = [int(x) for x in input(f"{MAGENTA}Starttime today (HH/MM):{YELLOW} ").split('/')]
-except Exception:
-    print(CLEAR_ALL + UP.format(1000))
-    for i in range(25):
-        print(f"{COLOR_LIST[i%5]}##############################################")
-        print(f"######        YOU ARE AN IDIOT!!!!      ######")
-        print(f"##############################################{UNBOLD}")
-        time.sleep(1)
-        print(CLEAR_ALL + UP.format(1000))
-    quit()
-print(CLEAR_ALL + UP.format(1000))
-HOMEPAGE = input(f"{MAGENTA}Link to student union homepage:{YELLOW} ")
-t = datetime.datetime.today()
-future = datetime.datetime(t.year, t.month, t.day, hour, minute) # TODO: Put the timer a few minutes before registeration opens
+# try:
+#     hour, minute = [int(x) for x in input(f"{MAGENTA}Starttime today (HH/MM):{YELLOW} ").split('/')]
+# except Exception:
+#     print(CLEAR_ALL + UP.format(1000))
+#     for i in range(25):
+#         print(f"{COLOR_LIST[i%5]}##############################################")
+#         print(f"######        YOU ARE AN IDIOT!!!!      ######")
+#         print(f"##############################################{UNBOLD}")
+#         time.sleep(1)
+#         print(CLEAR_ALL + UP.format(1000))
+#     quit()
+# print(CLEAR_ALL + UP.format(1000))
+HOMEPAGE = "http://stigull.is/"
+# t = datetime.datetime.today()
+# future = datetime.datetime(t.year, t.month, t.day, hour, minute) # TODO: Put the timer a few minutes before registeration opens
 
 # if t.hour >= 2:
 #     future += datetime.timedelta(days=1)
@@ -66,30 +66,29 @@ print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Fetching website{UNBOLD}")
 driver.get(HOMEPAGE) # TODO: change to your student union homepage
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Clicking: {YELLOW} SKRÁ INN{UNBOLD}")
-elem = driver.find_element_by_link_text("SKRÁ INN")
-elem.click()
-time.sleep(1)
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Filling out: {YELLOW} Username{UNBOLD}")
-inputElement = driver.find_element_by_id("username")
+inputElement = driver.find_element_by_name("username")
 inputElement.send_keys(USERNAME)
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Filling out: {YELLOW} Password{UNBOLD}")
-inputElement = driver.find_element_by_id("password")
+inputElement = driver.find_element_by_name("password")
 inputElement.send_keys(PASSWORD)
 
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Clicking: {YELLOW} Login{UNBOLD}")
-inputElement = driver.find_element_by_id("btn-login")
+inputElement = driver.find_element_by_xpath('//*[@id="bs-example-navbar-collapse-1"]/ul/li[1]/form/button')
 inputElement.click()
 time.sleep(2)
 
+elem = driver.find_element_by_xpath('//*[@id="bs-example-navbar-collapse-1"]/ul/li[4]/a')
+elem.click()
 print(f"{MAGENTA + BOLD}Action: {UNBOLD + GREEN}Selecting: {RED}VÍSÓ{UNBOLD}")
-links = driver.find_elements_by_link_text('Meiri upplýsingar')
+links = driver.find_elements_by_tag_name("a")
 
 for i in range(len(links)):
     print(links[i].get_attribute("href"))
 
-driver.get(links[0].get_attribute("href"))
+driver.get(links[5].get_attribute("href"))
 print(f"{MAGENTA + BOLD}Selected: {UNBOLD + GREEN}{links[0].get_attribute('href')}{UNBOLD}")
 
 vanilla_hardcore = "Niðurtalning í skráningu"
@@ -103,7 +102,7 @@ while True:
         time.sleep(0.2)
         print(UP + ALL_LEFT, end="")
     else:
-        bleb = driver.find_element_by_id("inn")
+        bleb = driver.find_element_by_class_name("btn btn-success")
         bleb.click()
         print(CLEAR_ALL + UP.format(1000))
         for i in range(25):
